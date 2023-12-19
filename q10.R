@@ -1,13 +1,14 @@
 library(arules)
 library(arulesViz)
 
-data("Groceries")
-str(Groceries)
-summary(Groceries)
+data <- read.csv('Market_Opt.csv')
+str(data)
+summary(data)
 
-model <- apriori(Groceries, parameter = list(support = 0.001, confidence = 0.5))
-summary(model)
+transactions <- as(data, "transactions")
+itemFrequencyPlot(transactions, topN = 10)
 
+model <- apriori(data, parameter = list(support = 0.001, confidence = 0.5))
 inspect(model)
 
-plot(model, method = "graph", control = list(type = "items"))
+plot(model, method = "graph", measure = "confidence")
